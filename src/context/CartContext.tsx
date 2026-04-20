@@ -2,8 +2,8 @@ import { createContext, useContext, useEffect, useMemo, useState, type ReactNode
 import { api } from "@/lib/api";
 import { useAuth } from "./AuthContext";
 
-export type CartItem = {
-  id: string;
+type ServerCartItem = {
+  itemId: string;
   source: "ShopZone" | "FoodRush" | "StyleHub";
   title: string;
   price: number;
@@ -37,7 +37,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       api
         .get("/cart")
         .then((r) => {
-          const serverItems = (r.data?.cart?.items || []).map((i: any) => ({
+          const serverItems = (r.data?.cart?.items || []).map((i: ServerCartItem) => ({
             id: i.itemId,
             source: i.source,
             title: i.title,

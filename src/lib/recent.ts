@@ -9,7 +9,9 @@ export function pushRecent(kind: "shop" | "food" | "style", id: string) {
     const list: string[] = raw ? JSON.parse(raw) : [];
     const next = [id, ...list.filter((x) => x !== id)].slice(0, MAX);
     localStorage.setItem(KEY(kind), JSON.stringify(next));
-  } catch {}
+  } catch {
+    // Ignore localStorage errors
+  }
 }
 
 export function getRecent(kind: "shop" | "food" | "style"): string[] {
@@ -29,7 +31,9 @@ export function pushRecentOrder(payload: { id: string; restaurantId?: string; re
     const list = raw ? JSON.parse(raw) : [];
     const next = [payload, ...list].slice(0, 10);
     localStorage.setItem(KEY("orders"), JSON.stringify(next));
-  } catch {}
+  } catch {
+    // Ignore localStorage errors
+  }
 }
 
 export function getRecentOrders(): Array<{ id: string; restaurantId?: string; restaurantName?: string; total: number; eta: number; placedAt: number; items: string[] }> {
